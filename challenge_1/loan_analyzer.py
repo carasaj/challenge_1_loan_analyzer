@@ -1,6 +1,4 @@
 # coding: utf-8
-import csv
-from pathlib import Path
 
 """Part 1: Automate the Calculations.
 
@@ -12,29 +10,38 @@ First, let's start with some calculations on a list of prices for 5 loans.
     3. Using the sum of all loans and the total number of loans, calculate the average loan price.
     4. Print all calculations with descriptive messages.
 """
+
+import csv  
+from pathlib import Path
+
+
 loan_costs = [500, 600, 200, 1000, 450]
 
 # How many loans are in the list?
 # @TODO: Use the `len` function to calculate the total number of loans in the list.
 # Print the number of loans from the list
 # YOUR CODE HERE!
-total_number_of_loans = len(loan_costs)
-print("The total number of loans is:", total_number_of_loans)
+
+total_number_of_loans = len(loan_costs) #define the variable total_number_of_loans as the number of data points in the list using the len() function
+print(f"The total number of loans is: {total_number_of_loans}")   #print the results in f-string format
 
 # What is the total of all loans?
 # @TODO: Use the `sum` function to calculate the total of all loans in the list.
 # Print the total value of the loans
 # YOUR CODE HERE!
-total_value_of_loans = sum(loan_costs)
-print("The total value of the loans is:", total_value_of_loans)
+
+
+total_value_of_loans = sum(loan_costs) #define the variable total_value_of_loans as the sum of all data points in the list using the sum() function
+print(f"The total value of the loans is: {total_value_of_loans}") #print the results in f-string format
+
 
 # What is the average loan amount from the list?
 # @TODO: Using the sum of all loans and the total number of loans, calculate the average loan price.
 # Print the average loan amount
 # YOUR CODE HERE!
 
-average_loan_price = total_value_of_loans/total_number_of_loans
-print("The average loan price is:", average_loan_price)
+average_loan_price = total_value_of_loans/total_number_of_loans   # define average_loan_price using operator for division acting on two variables that represent integers
+print(f"The average loan price is: {average_loan_price}")     #print the results in f-string format
 
 """Part 2: Analyze Loan Data.
 
@@ -70,28 +77,30 @@ loan = {
 # @TODO: Use get() on the dictionary of additional information to extract the Future Value and Remaining Months on the loan.
 # Print each variable.
 # YOUR CODE HERE!
-future_value = loan.get("future_value")
-print("The future value of the loan is:", future_value)
 
-remaining_months = loan.get("remaining_months")
-print("The number of remaining months is:", remaining_months)
+future_value = loan.get("future_value")  #define a variable, future_value, as the value pair for the key future_value using the .get() function
+print(f"The future value of the loan is: {future_value}") #print the results in f-string format
+
+remaining_months = loan.get("remaining_months")    #define a variable, remaining_months, as the value pair for the key remaining_months using the .get() function
+print(f"The number of remaining months is: {remaining_months}")   #print the results in f-string format
+
 # @TODO: Use the formula for Present Value to calculate a "fair value" of the loan.
 # Use a minimum required return of 20% as the discount rate.
 #   You'll want to use the **monthly** version of the present value formula.
 #   HINT: Present Value = Future Value / (1 + Discount_Rate/12) ** remaining_months
 # YOUR CODE HERE!
-discount_rate = 0.20
-print("The discount rate is:", discount_rate)
-fair_value= future_value / (1 + discount_rate/12) ** remaining_months
-print("The fair value of this loan is:", fair_value)
+
+discount_rate = 0.20   #create a variable for the provided discount_rate
+fair_value = future_value / (1 + discount_rate/12) ** remaining_months  #define a variable, fair_value, as the provided equation for present_value
+print(f"The fair value of this loan is: {fair_value}") #print the results in f-string format
 
 # If Present Value represents what the loan is really worth, does it make sense to buy the loan at its cost?
 # @TODO: Write a conditional statement (an if-else statement) to decide if the present value represents the loan's fair value.
 #    If the present value of the loan is greater than or equal to the cost, then print a message that says the loan is worth at least the cost to buy it.
 #    Else, the present value of the loan is less than the loan cost, then print a message that says that the loan is too expensive and not worth the price.
 # YOUR CODE HERE!
-if fair_value >= loan.get("future_value"):
-    print("This loan is worth the cost to buy it.")
+if fair_value >= loan.get("loan_price"):
+    print("This loan is at least worth the cost to buy it.")
 else:
     print("The loan is too expensive and not worth the price.")
 
@@ -131,7 +140,7 @@ present_value = calculate_present_value(
     new_loan["future_value"],
     new_loan["remaining_months"],
     annual_discount_rate)
-print(f"The present value of the loan is: {present_value}")
+print(f"The present value of the loan is: {present_value}") #print the results in f-string format
 
 
 """Part 4: Conditionally filter lists of loans.
@@ -178,13 +187,13 @@ inexpensive_loans = []
 
 # @TODO: Loop through all the loans and append any that cost $500 or less to the `inexpensive_loans` list
 # YOUR CODE HERE!
-for loan in loans:
+for loan in loans:   #create a loop to evaluate each dictionary in the list       
     if loan.get("loan_price") <= 500:
         inexpensive_loans.append(loan)
 
 # @TODO: Print the `inexpensive_loans` list
 # YOUR CODE HERE!
-print("The inexpensive loans are:", inexpensive_loans)
+print(f"The inexpensive loans are: {inexpensive_loans}") #print the results in f-string format
 
 """Part 5: Save the results.
 
@@ -212,5 +221,5 @@ output_path = Path("inexpensive_loans.csv")
 with open(output_path, 'w') as csvfile:
     csvwriter = csv.writer(csvfile)
     csvwriter.writerow(header)
-    for row in inexpensive_loans:
-        csvwriter.writerow(row.values())
+    for loan in inexpensive_loans:
+        csvwriter.writerow(loan.values())
